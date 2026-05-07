@@ -14,6 +14,8 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import type { LoginResponse } from "@/types";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type LoginFormData = {
   username: string;
@@ -31,15 +33,21 @@ export default function Login() {
     password: string;
   }) => {
     try {
-      const res: any = await login(data).unwrap();
+      const res: LoginResponse = await login(data).unwrap();
       dispatch(
-        setCredentials({ user: res.admin, token: res.token.accessToken })
+        setCredentials({ user: res.admin, token: res.token.accessToken }),
       );
       localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, res.token.accessToken);
       localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, res.token.refreshToken);
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(res.admin));
       navigate("/dashboard");
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as FetchBaseQueryError & {
+        data?: {
+          message?: string;
+        };
+      };
+
       form.setError("username", {
         message: err?.data?.message || "Login failed",
       });

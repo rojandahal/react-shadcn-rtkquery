@@ -3,8 +3,8 @@ import React, { Suspense } from "react";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import DashboardLayout from "./pages/dashboard/Layout";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
+// import { useSelector } from "react-redux";
+// import type { RootState } from "@/store/store";
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   // const isAuthenticated = useSelector(

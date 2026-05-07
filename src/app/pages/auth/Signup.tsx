@@ -32,6 +32,7 @@ export default function Signup() {
     password: string;
     confirmPassword: string;
   }) => {
+    console.log("Signup data:", data);
     setIsLoading(true);
     // TODO: Replace with real signup API call
     setTimeout(() => {
